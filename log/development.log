@@ -1,0 +1,59 @@
+  [1m[35m (253.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "amoody"[0m
+  [1m[35m (224.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "goodtrouble_test"[0m
+  [1m[35m (220.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "amoody"[0m
+  [1m[35m (225.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "goodtrouble_test"[0m
+  [1m[35m (110.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (121.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (21.9ms)[0m  [1m[34mSELECT pg_try_advisory_lock(940786846118735175);[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateOrganizations (20170708172515)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (98.7ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" bigserial primary key, "name" character varying, "description" character varying, "location" character varying, "interest_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (44.9ms)[0m  [1m[35mCREATE  INDEX  "index_organizations_on_interest_id" ON "organizations"  ("interest_id")[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708172515"]]
+  [1m[35m (17.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocialMediaAccounts (20170708174836)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (99.5ms)[0m  [1m[35mCREATE TABLE "social_media_accounts" ("id" bigserial primary key, "type" character varying, "url" character varying, "label" character varying, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (38.0ms)[0m  [1m[35mCREATE  INDEX  "index_social_media_accounts_on_user_id" ON "social_media_accounts"  ("user_id")[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708174836"]]
+  [1m[35m (12.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateInterests (20170708174920)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (83.5ms)[0m  [1m[35mCREATE TABLE "interests" ("id" bigserial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708174920"]]
+  [1m[35m (11.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEvents (20170708175156)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (100.8ms)[0m  [1m[35mCREATE TABLE "events" ("id" bigserial primary key, "title" character varying, "description" character varying, "url" character varying, "type" character varying, "organization_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (46.8ms)[0m  [1m[35mCREATE  INDEX  "index_events_on_organization_id" ON "events"  ("organization_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708175156"]]
+  [1m[35m (11.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateUsers (20170708175404)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (100.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" timestamp, "last_sign_in_at" timestamp, "current_sign_in_ip" inet, "last_sign_in_ip" inet, "location" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (29.6ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (46.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708175404"]]
+  [1m[35m (18.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJoinTableUserOrganization (20170708181945)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "organizations_users" ("user_id" bigint NOT NULL, "organization_id" bigint NOT NULL)[0m
+  [1m[35m (56.2ms)[0m  [1m[35mCREATE  INDEX  "index_organizations_users_on_user_id_and_organization_id" ON "organizations_users"  ("user_id", "organization_id")[0m
+  [1m[35m (50.2ms)[0m  [1m[35mCREATE  INDEX  "index_organizations_users_on_organization_id_and_user_id" ON "organizations_users"  ("organization_id", "user_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708181945"]]
+  [1m[35m (5.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJoinTableUserInterest (20170708184726)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "interests_users" ("user_id" bigint NOT NULL, "interest_id" bigint NOT NULL)[0m
+  [1m[35m (46.3ms)[0m  [1m[35mCREATE  INDEX  "index_interests_users_on_user_id_and_interest_id" ON "interests_users"  ("user_id", "interest_id")[0m
+  [1m[35m (38.3ms)[0m  [1m[35mCREATE  INDEX  "index_interests_users_on_interest_id_and_user_id" ON "interests_users"  ("interest_id", "user_id")[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170708184726"]]
+  [1m[35m (16.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (18.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-07-08 19:05:57.230393"], ["updated_at", "2017-07-08 19:05:57.230393"]]
+  [1m[35m (21.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(940786846118735175)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
