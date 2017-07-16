@@ -1,0 +1,18 @@
+<h2>Hello World</h2>
+<p>
+  The time is now: <%= Time.now %>
+</p>
+<p>
+<% if session[:current_user_id] %>
+Logged in with Facebook!
+<%= session[:current_user_name] %><br>
+<img src="<%= session[:current_user_image] %>"><br>
+<%= form_tag("https://callyourrep.co/result") do %>
+  <%= label_tag(:q, "Find your representatives:") %>
+  <%= text_field_tag(:address, "Address") %>
+  <%= submit_tag("Search") %>
+<% end %>
+<% else %>
+<%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+<% end %>
+</p>
