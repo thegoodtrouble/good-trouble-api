@@ -16,6 +16,6 @@
 
   ],
   "buildpacks": [
-
+    "heroku/ruby"
   ]
 }
