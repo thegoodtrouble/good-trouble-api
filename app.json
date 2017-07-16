@@ -1,0 +1,21 @@
+{
+  "name": "good-trouble-api",
+  "scripts": {
+  },
+  "env": {
+    "FACEBOOK_KEY": {
+      "required": true
+    },
+    "FACEBOOK_SECRET": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
